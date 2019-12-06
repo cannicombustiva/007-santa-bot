@@ -8,60 +8,6 @@ var fs = require('fs');
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, {polling: true});
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
-
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
-});
-
-bot.onText(/\/start/, (msg) => {
-    
-  bot.sendMessage(msg.chat.id, "Welcome", {
-  "reply_markup": {
-      "keyboard": [["/Join", "/Play"]]
-      }
-  });
-      
-  });
-
-// Listen for any kind of message. There are different kinds of
-// messages.
-bot.onText(/\/Join/, (msg) => {
-  console.log(msg.from.id)
-  const chatId = msg.chat.id;
-  const personalId = msg.from.id;
-
-    if(storeCheck(fs) === true) {
-      run(personalId, msg);
-    } else {
-        let result = {
-          "id" : [],
-          "user" : []
-        };
-      let data = JSON.stringify(result);
-      fs.writeFileSync('storing.json', data);
-
-     }
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, 'Received your message');
-});
-
-bot.onText(/\/Play/, (msg) => {
-  console.log(msg.from.id)
-  const chatId = msg.chat.id;
-  const personalId = msg.from.id;
-  play(msg);
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, 'Merry Christmas!');
-});
-
 //Get the storing file where you'll save the ids
 const getStore = () => new Promise((resolve, reject) => {
   fs.readFile('storing.json', (err, data) => {
@@ -139,6 +85,65 @@ const play = async (msg) => {
     }
 
   }
-  
-
 }
+
+const main = () => {
+  const m = new Map();
+  bot.onText(/\/start/, (msg) => {
+    bot.sendMessage(msg.chat.id, 'Welcome', {
+    reply_markup: {
+        keyboard: [['/Join', '/Play']]
+    }});   
+  });
+
+  // Listen for any kind of message. There are different kinds of
+  // messages.
+  bot.onText(/\/Join/, (msg) => {
+    console.log(msg.from.id)
+    const chatId = msg.chat.id;
+    const personalId = msg.from.id;
+
+      if(storeCheck(fs) === true) {
+        run(personalId, msg);
+      } else {
+          let result = {
+            "id" : [],
+            "user" : []
+          };
+        let data = JSON.stringify(result);
+        fs.writeFileSync('storing.json', data);
+
+      }
+    // send a message to the chat acknowledging receipt of their message
+    bot.sendMessage(chatId, 'Received your message');
+  });
+
+  bot.onText(/\/Play/, (msg) => {
+    console.log(msg.from.id)
+    const chatId = msg.chat.id;
+    const personalId = msg.from.id;
+    play(msg);
+    // send a message to the chat acknowledging receipt of their message
+    bot.sendMessage(chatId, 'Merry Christmas!');
+  });
+
+  bot.onText(/\/Dio/, (msg) =>{
+    m.set('id', msg.from.id)
+    m.set('first', msg.from.first_name)
+    m.set('last', msg.from.last_name)
+    m.set('nick', msg.from.username)
+    n.set('id', m.id);
+
+    object = {}
+  
+    m.forEach((value, key) => {
+      var keys = key.split('.'),
+          last = keys.pop();
+      keys.reduce((r, a) => r[a] = r[a] || {}, object)[last] = value;
+  });
+
+  console.log(object);
+  })
+};
+
+main()

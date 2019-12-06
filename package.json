@@ -1,0 +1,9 @@
+{
+    "name": "santa-bot",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "node-telegram-bot-api": "^0.40.0"
+    }
+}
