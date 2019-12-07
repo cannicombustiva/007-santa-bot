@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const TelegramBot = require('node-telegram-bot-api');
 const mixer = require('./mixer');
 
-const token = "999735973:AAFzDNHXDunkFsV78Kr0aPA4F0YwPkjGQ7w";
+const token = "YOUR_TOKEN_HERE";
 const storeFileName = './storing.json';
 
 const initialStore = {
