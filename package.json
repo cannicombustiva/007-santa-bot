@@ -1,9 +1,11 @@
 {
-    "name": "santa-bot",
-    "scripts": {
-        "start": "node index.js"
-    },
-    "dependencies": {
-        "node-telegram-bot-api": "^0.40.0"
-    }
+  "name": "santa-bot",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.40.0",
+    "fs-extra": "^8.1.0",
+    "ramda": "^0.26.1"
+  }
 }
