@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 
 const mixer = require('./mixer');
 
-const token = "999735973:AAFzDNHXDunkFsV78Kr0aPA4F0YwPkjGQ7w";
+const token = "YOUR_TOKEN_HERE";
 const storeFileName = './storing.json';
 
 const initialStore = {
